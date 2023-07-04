@@ -156,5 +156,6 @@ configs/local/default.yaml
 /data
 xdg-open
 
-.dvc
+!.dvc
 mlruns
+/logs

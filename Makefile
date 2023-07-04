@@ -36,9 +36,7 @@ run-multitrain:
 	@echo 'num_jobs ${JOB} is defined'
 	@echo 'config change ${COMMAND} is defined'
 	docker run -it --rm --name ${TAG} \
-	-v ${PWD}/outputs:/src/outputs \
-	-v ${PWD}/data:/src/data \
-	-v ${PWD}/logs:/src/logs \
+	-v ${PWD}:/src \
 	--net=host \
 	${USERNAME}/${PROJECT}:${TAG} \
 	copper_train -m hydra/launcher=joblib hydra.launcher.n_jobs=${JOB} ${COMMAND}
