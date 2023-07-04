@@ -1,4 +1,52 @@
-# Lightning Template
+# EMLO-3_Assignment4
+This repo contains session-4 assignment of EMLO course from TSAI.
+
+## Introduction
+This assignment contains a template containing pytorch lightning code. Below are few points this template covers:
+
+- Dockerfile for the project
+    - DevContainer for the Project
+    - Docker Image should have your package installed
+- Add CIFAR10 Dataset
+- Add TIMM to the project template
+    - Should be able to train any image classification model from TIMM
+## Folder structure
+We can get started with the folder structure for this repository.
+
+## Getting started
+Lets go through the steps required to run this template:
+
+Prerequisite:
+
+- Docker installed on the host system.
+- VS Code if using devcontainer.
+- make tool installed on the host.
+
+Steps: 
+- Git clone this repo onto the host: `git clone https://github.com/devdastl/EMLO-3_Assignment4.git`
+- Build docker image, this repo uses Makefile to easily execute docker command. Run command `make build-image`. you can pass `USERNAME=a PROJECT=b TAG=c` with make command to build docker image of name `a/b:c`.
+- You can also directly pull docker image from Dockerhub instead of building it.
+    - `docker pull devdastl/emlop:assignment4-v1`
+    - `make USERNAME=devdastl run-train`
+- Run `make help` to list available steps.
+<br>
+
+There are three ways to exectue training and evaluation on Docker container and these are coverd below:
+
+### Run training and evaluation using Makefile
+To directly run training and evaluation on built image you can run following make command:
+- To start training on CIFAR: `make run-train`
+- To train on MNSIT: `make run-train COMMAND="data=mnist model=mnist"`
+    - This will train and put model and log in `/outputs/date/time/lightning_logs` as well as a temp model in `/outputs`.
+    - 
+- To start evaluation: `make run-eval`
+- Start eval on MNIST: `make run-eval COMMAND="data=mnist model=mnist"` 
+
+### Run interactive using Makefile
+
+### Run VS code specific devcontainer
+
+
 
 ```
 copper_train --help
@@ -9,26 +57,6 @@ examples
 - `copper_train data.num_workers=16`
 - `copper_train data.num_workers=16 trainer.deterministic=True +trainer.fast_dev_run=True`
 
-### Cat vs Dog with ViT
-
-```
-find . -type f -empty -print -delete
-```
-
-```
-copper_train experiment=cat_dog data.num_workers=16 +trainer.fast_dev_run=True
-```
-
-```
-copper_train experiment=cat_dog data.num_workers=16
-```
-
-## Multi Run
-
-```
-copper_train -m hydra/launcher=joblib hydra.launcher.n_jobs=4 experiment=mnist data.batch_size=8,16,32,64 data.num_workers=0
-```
-
 ## Development
 
 Install in dev mode
@@ -37,38 +65,6 @@ Install in dev mode
 pip install -e .
 ```
 
-## TODO
+### Docker
 
-Workaround for `num_workers>0` in Hydra JobLib
-
-```python
-import os
-import torch, torch.nn as nn, torch.nn.functional as F
-from torch.utils.data import DataLoader
-from torchvision import transforms, datasets
-import hydra
-
-class Model(nn.Module):
-    def __init__(self):
-        super().__init__()
-        self.l1 = torch.nn.Linear(28 * 28, 10)
-
-    def forward(self, x):
-        return torch.relu(self.l1(x.view(x.size(0), -1)))
-
-@hydra.main()
-def main(cfg):
-    data_set = datasets.MNIST(os.getcwd(), download=True, train=True, transform=transforms.ToTensor())
-    data_loader = DataLoader(data_set, batch_size=64, num_workers=cfg.num_workers, multiprocessing_context='fork')
-    model = Model()
-    optim = torch.optim.Adam(model.parameters(), lr=cfg.lr)
-
-    for batch in data_loader:
-        x, y = batch
-        y_hat = model(x)
-        loss = F.cross_entropy(y_hat, y)
-    print(f'completed {cfg.lr}')
-
-if __name__ == '__main__':
-    main()
-```
+<docker-usage-instructions-here>
