@@ -6,3 +6,4 @@ batch_size: 64
 num_workers: 0
 pin_memory: False
 block_size: 8
+download: True

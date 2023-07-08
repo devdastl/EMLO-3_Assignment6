@@ -99,7 +99,8 @@ class HarryPotterDataModule(LightningDataModule):
         batch_size: int = 64,
         num_workers: int = 0,
         pin_memory: bool = False,
-        block_size=8
+        block_size=8,
+        download=True
     ):
         super().__init__()
 
@@ -109,7 +110,7 @@ class HarryPotterDataModule(LightningDataModule):
         self.data_val: Optional[Dataset] = None
 
     def prepare_data(self):
-        HarryPotterDataset(self.hparams.data_dir, download=True, block_size=self.hparams.block_size)
+        HarryPotterDataset(self.hparams.data_dir, download=self.hparams.download, block_size=self.hparams.block_size)
 
     def setup(self, stage: Optional[str] = None):
         # load and split datasets only if not loaded already

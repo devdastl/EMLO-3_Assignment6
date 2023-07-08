@@ -8,6 +8,7 @@ from omegaconf import DictConfig
 import mlflow.pytorch
 from mlflow import MlflowClient
 from lightning.pytorch.loggers.mlflow import MLFlowLogger
+from lightning.pytorch.tuner import Tuner
 
 from copper import utils
 
@@ -50,6 +51,16 @@ def train(cfg: DictConfig) -> Tuple[dict, dict]:
 
     if cfg.get("compile"):
         model = torch.compile(model)
+
+    if cfg.get("tuner"):
+        tuner = Tuner(trainer)
+        lr_finder = tuner.lr_find(model, datamodule)
+        print(f"best initial lr={lr_finder.suggestion()}")
+
+        batch_finder = tuner.scale_batch_size(model, datamodule, mode="power")
+        print(f"best initial lr={batch_finder.suggestion()}")
+
+        print(f"optimal batch size = {datamodule.hparams.batch_size} & optimal learning-rate = {model.hparams.learning_rate}")
 
     if cfg.get("train"):
         log.info("Starting training!")
