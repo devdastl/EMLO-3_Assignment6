@@ -1,0 +1,36 @@
+# @package _global_
+
+# to execute this experiment run:
+# python train.py experiment=cat_dog
+
+defaults:
+  - override /data: harry_potter.yaml
+  - override /model: gpt.yaml
+  - override /trainer: default.yaml
+  - override /logger: many_loggers.yaml
+  - override /callbacks: default.yaml
+
+# all parameters below will be merged with parameters from default configurations set above
+# this allows you to overwrite only specified parameters
+
+experiment_name: "GPT HyperParameter optimization on hogward"
+
+tags:
+  mnist: "batch_size_exp"
+
+seed: 12345
+
+trainer:
+  min_epochs: 0
+  max_epochs: 2
+  gradient_clip_val: 0.5
+
+data:
+  num_workers: 0
+
+compile: False
+
+logger:
+  mlflow:
+    tags: ${tags}
+    experiment_name: ${experiment_name}
