@@ -58,7 +58,6 @@ def train(cfg: DictConfig) -> Tuple[dict, dict]:
         print(f"best initial lr={lr_finder.suggestion()}")
 
         batch_finder = tuner.scale_batch_size(model, datamodule, mode="power")
-        print(f"best initial lr={batch_finder.suggestion()}")
 
         print(f"optimal batch size = {datamodule.hparams.batch_size} & optimal learning-rate = {model.hparams.learning_rate}")
 

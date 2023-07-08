@@ -20,7 +20,7 @@ defaults:
 task_name: "train"
 
 # run lr and batch tuner if true
-tuner: False
+tuner: True
 
 # set False to skip model training
 train: True
