@@ -24,13 +24,15 @@ task_name: "train"
 
 # run lr and batch tuner if true
 tuner: True
+lr_tune: True
+batch_tune: True
 
 # set False to skip model training
 train: True
 
 # evaluate on test set, using best model weights achieved during training
 # lightning chooses best weights based on the metric specified in checkpoint callback
-test: True
+test: False
 
 # compile model for faster training with pytorch 2.0
 compile: False
