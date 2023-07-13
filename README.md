@@ -1,18 +1,23 @@
-# EMLO-3_Assignment4
-This repo contains session-6 assignment of EMLO course from TSAI.
+# EMLO-3_Assignment7
+This repo contains session-7 assignment of EMLO course from TSAI.
 
 ## Introduction
-Train ViT model on different patch_size=(1, 2, 4, 8, 16) on CIFAR10 dataset (multirun using joblib)
+Integrate GPT Lightning implementation to your lightning-template. Train on Harry Potter Text : https://github.com/formcept/whiteboard/tree/master/nbviewer/notebooks/data/harrypotterLinks to an external site.
+<br>
 
-Do training in docker
+This should satify below requirements:
+- Find the Best LR and the Best Batch Size
+- Perform Hyper Param Optimization (Lowest Val Loss) for
+    - block_size
+    - n_embed
+    - n_heads
+    - drop_p
+    - n_decoder_blocks : This is the number of GPTDecoderBlock used in self.blocks of GPT
+- DO NOT EXCEED 60M Params for the Model
+- You can do MAXIMUM of 50 TRIALS
+- Each HParam Optimization Experiment should be done for “1 Epoch” ONLY
+- Train the final model with the best HParams for 10 Epochs. All Experiments and Training must be done on Colab using GPU (T4)
 
-- Make sure you mount logs directory from the host system
-- Make sure to allow your Logger UI Server Port is accessible
-
-Add DVC Tracking for your training logs, model and dataset
-
-Update README.meLinks to an external site. on how to train your model in docker and use the logger ui
-You can exec inside a running container to start the logging ui
 
 ## Folder structure
 We can get started with the folder structure for this repository.
@@ -22,21 +27,25 @@ Lets go through the steps required to run this template:
 
 Prerequisite:
 
-- Docker installed on the host system.
 - VS Code if using devcontainer.
 - make tool installed on the host.
 
 Steps: 
-- Git clone this repo onto the host: `git clone https://github.com/devdastl/EMLO-3_Assignment6.git`
-- Build docker image, this repo uses Makefile to easily execute docker command. Run command `make build-image`. you can pass `USERNAME=a PROJECT=b TAG=c` with make command to build docker image of name `a/b:c`.
-<br>
+- Open notebook present in `notebooks/emlo-assignment7.ipynb`.
+- Follow the notebook to install the environment and run the hparam optimization job.
+- Finally run the training on 10 epochs.
 
-### Run training using Makefile
-To run Training with given patch size run following command:
- `make run-multitrain JOB=5 COMMAND="experiment=cifar model.patch_size=1,2,4,8,16 data.num_workers=0 logger=many_loggers"`
+### Optimial Hyper-parameters based on above notebook
+In this section lets see the output of hparam search:
+1. `batch_size` = 1024
+2. `data.block_size` = 8 
+3. `model.n_embed` = 32 
+4. `model.n_heads`= 16 
+5. `model.drop_p` = 0.09 
+6. `model.n_decoder_blocks` = 1
 
-above command takes number of jobs `JOB` and config override `COMMAD` to execute multiple trainigs based on given parameters in `COMMAND`.
-
+- Lowest val/loss for one epoch - 4.16
+- Lowest val/loss for 10 epoch - 2.8
 ### Running visualization tools
 Once the training is launched, you can track progress and logs using visualization tools like AIM and MLflow. 
 Current script support both of them. Below are the steps to launch the UI.
