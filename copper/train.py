@@ -53,12 +53,14 @@ def train(cfg: DictConfig) -> Tuple[dict, dict]:
         model = torch.compile(model)
 
     if cfg.get("tuner"):
-        tuner = Tuner(trainer)
-        lr_finder = tuner.lr_find(model, datamodule)
-        print(f"best initial lr={lr_finder.suggestion()}")
+        if cfg.get("lr_tune"):
+            tuner = Tuner(trainer)
+            lr_finder = tuner.lr_find(model, datamodule)
+            print(f"best initial lr={lr_finder.suggestion()}")
 
-        batch_finder = tuner.scale_batch_size(model, datamodule, mode="power")
-        log.info(f"optimal batch size = {datamodule.hparams.batch_size} & optimal learning-rate = {model.hparams.learning_rate}")
+        if cfg.get("batch_tune"):
+            batch_finder = tuner.scale_batch_size(model, datamodule, mode="power")
+            log.info(f"optimal batch size = {datamodule.hparams.batch_size} & optimal learning-rate = {model.hparams.learning_rate}")
 
     if cfg.get("train"):
         log.info("Starting training!")
