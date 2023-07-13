@@ -23,6 +23,8 @@ This should satify below requirements:
 We can get started with the folder structure for this repository.
 
 ## Getting started
+[link of notebook](https://github.com/devdastl/EMLO-3_Assignment6/blob/assignment-7/notebooks/emlo-assignment7.ipynb)
+
 Lets go through the steps required to run this template:
 
 Prerequisite:
@@ -31,7 +33,7 @@ Prerequisite:
 - make tool installed on the host.
 
 Steps: 
-- Open notebook present in `notebooks/emlo-assignment7.ipynb`.
+- Open notebook present in [`notebooks/emlo-assignment7.ipynb`](https://github.com/devdastl/EMLO-3_Assignment6/blob/assignment-7/notebooks/emlo-assignment7.ipynb).
 - Follow the notebook to install the environment and run the hparam optimization job.
 - Finally run the training on 10 epochs.
 
