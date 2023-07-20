@@ -59,10 +59,10 @@ Current script support both of them. Below are the steps to launch the UI.
 Below are the screenshot of tools showing 5 running process indicating trainings for different patch sizes i.e. 1,2,4,8,16.
 
 #### AIM logger
-![alt-text-1](scripts/aim_shot.PNG "output1")
+![alt-text-1](scripts/aim_50.PNG "output1")
 
 #### MLflow logger
-![alt-text-1](scripts/mlflow_shot.PNG "output2")
+![alt-text-1](scripts/mlflow_50.PNG "output2")
 
 ## Development
 For development in docker run: `make run-interactive` this will allow development inside docker
