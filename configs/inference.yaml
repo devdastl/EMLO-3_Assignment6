@@ -4,25 +4,25 @@
 # order of defaults determines the order in which configs override each other
 defaults:
   - _self_
+  - datamodule: cifar10.yaml
   - model: vit.yaml
   - paths: default.yaml
-  
-  # experiment configs allow to config any model hyperparams while inference
-  # e.g. image size or num classes
+  - trainer: default.yaml
+  - logger: many_loggers.yaml
+  - callbacks: default.yaml
+  - hydra: default.yaml
+
+  # experiment configs allow for version control of specific hyperparameters
+  # e.g. best hyperparameters for given model and datamodule
   - experiment: null
 
-# task name, determines output directory path
-task_name: "infer"
+   # config for hyperparameter optimization
+  - hparams_search: null
 
-# compile model for faster training with pytorch 2.0
-compile: False
+# task name, determines output directory path
+task_name: "demo"
 
 # simply provide checkpoint path to resume training
-# ckpt_path: null
-ckpt_path: ${paths.root_dir}/ckpt/epoch1.ckpt
+ckpt_path: ???
 
-# test image
-test_path: ${paths.data_dir}/PetImages_split/test/Cat/58.jpg
-
-# seed for random number generators in pytorch, numpy and python.random
-seed: null
+demo_ckpt_path: ${paths.root_dir}/model.script.pt
