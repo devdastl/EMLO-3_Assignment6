@@ -1,11 +1,28 @@
 # @package _global_
 
+# specify here default configuration
+# order of defaults determines the order in which configs override each other
 defaults:
   - _self_
+  - model: vit.yaml
   - paths: default.yaml
-  - hydra: default.yaml
+  
+  # experiment configs allow to config any model hyperparams while inference
+  # e.g. image size or num classes
+  - experiment: null
 
-task_name: "gradio_demo"
+# task name, determines output directory path
+task_name: "infer"
 
-# checkpoint is necessary for demo
-ckpt_path: ???
+# compile model for faster training with pytorch 2.0
+compile: False
+
+# simply provide checkpoint path to resume training
+# ckpt_path: null
+ckpt_path: ${paths.root_dir}/ckpt/epoch1.ckpt
+
+# test image
+test_path: ${paths.data_dir}/PetImages_split/test/Cat/58.jpg
+
+# seed for random number generators in pytorch, numpy and python.random
+seed: null

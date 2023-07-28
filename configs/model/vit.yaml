@@ -6,6 +6,7 @@ patch_size: 4
 emb_size: 64
 img_size: 32
 depth: 6
+learning_rate: 0.01445439770745928 #1e-2
 
 optimizer:
   _target_: torch.optim.Adam

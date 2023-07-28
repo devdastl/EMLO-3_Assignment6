@@ -26,10 +26,14 @@ trainer:
   gradient_clip_val: 0.5
 
 data:
-  num_workers: 16
+  num_workers: 0
+  batch_size: 128
 
 model:
   num_classes: 10
+  img_size: 32
+  emb_size: 16
+  depth: 2
 
 compile: False
 
