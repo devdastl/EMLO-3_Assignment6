@@ -1,0 +1,14 @@
+FROM python:3.8.10-slim
+
+WORKDIR /src
+COPY scripts/vit_infer.py vit.torchscript.pt /src/
+
+RUN pip3 install --no-cache-dir \
+    torch==2.0.0+cpu \
+    torchvision \
+    gradio \
+    -f https://download.pytorch.org/whl/torch_stable.html
+
+EXPOSE 8180
+
+CMD ['python3', 'vit_infer.py', '/workspace/vit.torchscript.pt']

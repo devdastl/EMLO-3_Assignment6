@@ -3,7 +3,7 @@
 #vars
 USERNAME = default
 PROJECT = emlop
-TAG = assignment6-v1
+TAG = assignment8-v1-infer
 
 #setup make commands
 help:
@@ -14,6 +14,9 @@ help:
 
 build-image:
 	docker build -t ${USERNAME}/${PROJECT}:${TAG} . 
+
+build-infer-image:
+	docker build -f ./gradio_Dockerfile -t ${USERNAME}/${PROJECT}:${TAG} .
 
 run-interactive:
 	docker run -it --rm --name ${TAG} \
@@ -56,6 +59,7 @@ run-eval:
 	-v ${PWD}/logs:/src/logs \
 	${USERNAME}/${PROJECT}:${TAG} \
 	copper_eval ${COMMAND}
+
 
 push-image:
 	echo "docker push ${USERNAME}/${PROJECT}:${TAG}" 
