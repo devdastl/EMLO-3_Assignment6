@@ -3,12 +3,10 @@ FROM python:3.8.10-slim
 WORKDIR /src
 COPY scripts/vit_infer.py vit.torchscript.pt /src/
 
-RUN pip3 install --no-cache-dir \
-    torch==2.0.0+cpu \
-    torchvision \
-    gradio \
-    -f https://download.pytorch.org/whl/torch_stable.html
+RUN pip install torch==1.12.0+cpu torchvision==0.13.0+cpu --extra-index-url https://download.pytorch.org/whl/cpu --no-cache-dir
+
+RUN pip install -U pip && pip install gradio==3.39.0 gradio-client==0.3.0 --no-cache-dir
 
 EXPOSE 8180
 
-CMD ['python3', 'vit_infer.py', '/workspace/vit.torchscript.pt']
+CMD ["python", "vit_infer.py", "/src/vit.torchscript.pt"]

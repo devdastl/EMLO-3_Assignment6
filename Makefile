@@ -60,6 +60,12 @@ run-eval:
 	${USERNAME}/${PROJECT}:${TAG} \
 	copper_eval ${COMMAND}
 
+run-infer:
+	@echo 'server on port 8180'
+	docker run -it -p 8180:8180 --name ${TAG} \
+    ${USERNAME}/${PROJECT}:${TAG}
+
+
 
 push-image:
 	echo "docker push ${USERNAME}/${PROJECT}:${TAG}" 
